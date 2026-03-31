@@ -4,14 +4,20 @@
 
 #include <Arduino.h>
 
+#include <due_can.h>
+#include <vector3.h>
+
 #include <ap_param.h>
+#include <navx.h>
 
 
 class ap_periph_t
 {	
 public:
 	ap_periph_t( HardwareSerial& uart    = Serial,
-				 HardwareSerial& console = Serial);
+				 HardwareSerial& console = Serial,
+				 CANRaw&         can     = Can1,
+				 navx_t&         navx    = navx0 );
 	
 	void init( void );
 	void update( void );
@@ -22,7 +28,10 @@ private:
 	
 	HardwareSerial& _uart;
 	HardwareSerial& _console;
+	CANRaw&         _can;
+	navx_t&         _navx;
 
+	void _can_init( void );
 	void _load_parameters( void );
 };
 

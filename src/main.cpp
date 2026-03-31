@@ -15,13 +15,17 @@ void
 setup( void )
 {
 	Serial.begin(INITIAL_BAUD);
-	
+
+#ifdef DEBUG	
 	Serial.println( "starting ap_periph" );
+#endif
 	
 	ap_param_s::set_console( &Serial );
 	ap_param_s::set_flash( &due_flash );
 	
+#ifdef DEBUG
 	Serial.println( "initializing ap_periph" );
+#endif
 	
 	ap_periph.init();
 }
