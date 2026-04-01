@@ -1,4 +1,4 @@
-// Source: https://github.com/ArduPilot/ardupilot/blob/a004f8b27b3f0847a0bc06a82f55f01c9f044110/libraries/AP_Math/vector3.h
+// Спизженно отсюда: https://github.com/ArduPilot/ardupilot/blob/a004f8b27b3f0847a0bc06a82f55f01c9f044110/libraries/AP_Math/vector3.h
 
 /*
    This program is free software: you can redistribute it and/or modify
@@ -182,13 +182,13 @@ public:
     T angle(const Vector3<T> &v2) const;
 
     // check if any elements are NAN
-    bool is_nan(void) const WARN_IF_UNUSED;
+    [[nodiscard]] bool is_nan(void) const;
 
     // check if any elements are infinity
-    bool is_inf(void) const WARN_IF_UNUSED;
+    [[nodiscard]] bool is_inf(void) const;
 
     // check if all elements are zero
-    bool is_zero(void) const WARN_IF_UNUSED {
+    [[nodiscard]] bool is_zero(void) const {
         return x == 0 && y == 0 && z == 0;
     }
 

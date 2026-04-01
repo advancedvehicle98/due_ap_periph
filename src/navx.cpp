@@ -21,3 +21,10 @@ init( void )
 	_console->println( "navx success" );
 #endif
 }
+
+
+void navx_t::
+update( void )
+{
+	
+}

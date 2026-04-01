@@ -7,11 +7,16 @@ ap_periph_t::
 ap_periph_t( HardwareSerial& uart,
 			 HardwareSerial& console,
 			 CANRaw&         can,
-			 navx_t&         navx )
-	: _uart( uart ),
-	  _console( console ),
-	  _can( can ),
-	  _navx( navx )
+#ifdef CONFIG_USE_NAVX
+			 navx_t&         navx
+#endif
+			 )
+	: _uart( uart )
+	, _console( console )
+	, _can( can )
+#ifdef CONFIG_USE_NAVX
+	, _navx( navx )
+#endif
 {
 	
 }
@@ -22,10 +27,14 @@ init( void )
 {
 	if ( _uart != _console ) _console.begin( _CONSOLE_BAUD );
 
-	// _load_parameters();
+#ifdef CONFIG_LOAD_PARAMS
+	_load_parameters();
+#endif
 
+#ifdef CONFIG_USE_NAVX
 	_navx.set_console( &_console );
 	_navx.init();
+#endif
 	
 	// Добавить инициализацию CAN
 	
@@ -35,10 +44,13 @@ init( void )
 void ap_periph_t::
 update( void )
 {
-#ifdef DEBUG 
-	const Vector3f& print_data;
-#endif 
+	// const Vector3f& print_data;
 		
-	// Компас
-	print_data = _navx.get_mag_vec3();
+	// // Компас
+	// print_data = _navx.get_mag_vec3();
+#ifdef CONFIG_USE_NAVX
+	_navx.update();
+#endif
+
+	_motors.update();
 }

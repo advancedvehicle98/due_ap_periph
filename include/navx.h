@@ -12,8 +12,12 @@
 
 #include <navx.h>
 
+#include <config.h>
+
 #include <HardwareSerial.h>
 #include <Wire.h>
+
+#include <vector3.h>
 
 
 class navx_t {
@@ -25,25 +29,22 @@ public:
 		
 	};
 
-	struct raw_gyro  { int16_t x, y, z; };
-	struct raw_accel { int16_t x, y, z; };
-	struct cal_mag   { int16_t x, y, z; };
-
 	byte rx_buffer[0x70];
    	
 	void init( void );
+	void update( void );
 
 	void set_console( HardwareSerial *console ) {
 		_console = console;
 	}
 
-	const Vector3f& get_mag_vec3( void ) const {
-		const Vector3f& v;
+	// const Vector3f& get_mag_vec3( void ) const {
+	// 	const Vector3f& v;
 
-		v.x = 
+	// 	// v.x = 
 		
-		return v;
-	}
+	// 	return v;
+	// }
 
 private:
 	
@@ -55,7 +56,7 @@ private:
 
 
 // нужно, чтобы ссылку конструкторам сразу давать без боли в жопе
-#ifdef USE_NAVX
+#ifdef CONFIG_STATIC_NAVX
 extern navx_t navx0;
 #endif 
 

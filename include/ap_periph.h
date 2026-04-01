@@ -3,12 +3,15 @@
 
 
 #include <Arduino.h>
+#include <config.h>
 
 #include <due_can.h>
-#include <vector3.h>
 
 #include <ap_param.h>
-#include <navx.h>
+#ifdef CONFIG_USE_NAVX
+#   include <navx.h>
+#endif
+#include <srv_channel_skid.h>
 
 
 class ap_periph_t
@@ -17,7 +20,10 @@ public:
 	ap_periph_t( HardwareSerial& uart    = Serial,
 				 HardwareSerial& console = Serial,
 				 CANRaw&         can     = Can1,
-				 navx_t&         navx    = navx0 );
+#if defined( CONFIG_USE_NAVX ) && defined( CONFIG_STATIC_NAVX )
+				 navx_t&         navx    = navx0
+#endif
+				 );
 	
 	void init( void );
 	void update( void );
@@ -29,8 +35,13 @@ private:
 	HardwareSerial& _uart;
 	HardwareSerial& _console;
 	CANRaw&         _can;
-	navx_t&         _navx;
 
+#ifdef CONFIG_USE_NAVX
+	navx_t&         _navx;
+#endif
+
+	srv_channel_skid _motors;
+	
 	void _can_init( void );
 	void _load_parameters( void );
 };
