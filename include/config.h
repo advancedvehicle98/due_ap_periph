@@ -47,4 +47,11 @@
 //// #define CONFIG_LOAD_PARAMS
 
 
+// Misc
+//--------------------------------------------------------
+
+
+//// #define CONFIG_PWM_CALC_SLEW
+
+
 #endif // ! __CONFIG_H
