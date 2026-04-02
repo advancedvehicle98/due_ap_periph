@@ -2,6 +2,30 @@
 #define __CONFIG_H
 
 
+// Motor config
+//--------------------------------------------------------
+#define CONFIG_MOT_THR_MAX   100
+
+static_assert( 5 <= CONFIG_MOT_THR_MAX
+			&&      CONFIG_MOT_THR_MAX <= 100,
+			   "CONFIG_MOT_THR_MAX must be in range [5, 100]" );
+
+#define CONFIG_MOT_THR_MIN   0
+
+static_assert( 0 <= CONFIG_MOT_THR_MIN
+			&&      CONFIG_MOT_THR_MIN <= 20,
+			   "CONFIG_MOT_THR_MIN must be in range [0, 20]" );
+
+static_assert( CONFIG_MOT_THR_MIN <= CONFIG_MOT_THR_MAX,
+			   "CONFIG_MOT_THR_MIN must be less or equal t0 CONFIG_MOT_THR_MAX");
+
+#define CONFIG_MOT_THST_EXPO 0.0
+
+static_assert( -1.0f - __FLT_EPSILON__ < float( CONFIG_MOT_THST_EXPO )
+			&&                           float( CONFIG_MOT_THST_EXPO ) < 1.0f + __FLT_EPSILON__,
+			   "CONFIG_MOT_THST_EXPO must be in range [-1.0, 1.0]" );
+
+
 // MXP-MD2 config
 //--------------------------------------------------------
 #define CONFIG_USE_MXP_MD2
