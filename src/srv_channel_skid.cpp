@@ -1,7 +1,5 @@
 #include <srv_channel_skid.h>
 
-#include <initializer_list>
-
 #include <Arduino.h>
 
 #include <math.h>
@@ -85,6 +83,8 @@ _driver_specific_out( void )
 }
 
 
+#ifdef CONFIG_SKID_PID
+
 void srv_channel_skid::
 _get_rate_controlled_throttle( float& throttle_left,
 							   float& throttle_right,
@@ -100,6 +100,8 @@ _get_rate_controlled_throttle( float& throttle_left,
 		ap_wheel_rate_control::inst_e::RIGHT, throttle_right, dt
 	);
 }
+
+#endif
 
 
 float srv_channel_skid::

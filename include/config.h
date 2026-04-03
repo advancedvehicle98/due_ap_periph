@@ -2,6 +2,9 @@
 #define __CONFIG_H
 
 
+#include <hdefs.h>
+
+
 // Motor config
 //--------------------------------------------------------
 
@@ -64,6 +67,7 @@
 
 // Navx config
 //--------------------------------------------------------
+
 #define CONFIG_USE_NAVX
 
 #ifdef CONFIG_USE_NAVX
@@ -71,31 +75,73 @@
 #endif
 
 
-// PID rate control parameters
+// PID rate control parameters (тоже в процессе)
 //--------------------------------------------------------
 
 // https://github.com/ArduPilot/ardupilot/blob/7ae671e53f25e8f784d3e6ede9f125c6aca12cf7/libraries/AP_WheelEncoder/AP_WheelRateControl.cpp#L231
 
 #ifdef CONFIG_SKID_STEER
 
-#define   CONFIG_PID_P         0.1f
-#define   CONFIG_PID_I         0.0f
-#define   CONFIG_PID_D         0.0f
-#define   CONFIG_PID_FF        0.1f 
-#define   CONFIG_PID_IMAX      0.0f 
-#define   CONFIG_PID_FILT_T_HZ 1.0f 
-#define   CONFIG_PID_FILT_E_HZ 1.0f
-#define   CONFIG_PID_FILT_D_HZ 1.0f 
-#define   CONFIG_PID_SRMAX     0.0f
-#define   CONFIG_PID_DFF       0.0f
+#   undef CONFIG_SKID_PID
 
-#endif
+#   ifdef CONFIG_SKID_PID
+
+#       define   CONFIG_PID_P         0.1f
+#       define   CONFIG_PID_I         0.0f
+#       define   CONFIG_PID_D         0.0f
+#       define   CONFIG_PID_FF        0.1f 
+#       define   CONFIG_PID_IMAX      0.0f 
+#       define   CONFIG_PID_FILT_T_HZ 1.0f 
+#       define   CONFIG_PID_FILT_E_HZ 1.0f
+#       define   CONFIG_PID_FILT_D_HZ 1.0f 
+#       define   CONFIG_PID_SRMAX     0.0f
+#       define   CONFIG_PID_DFF       0.0f
+
+#   endif // CONFIG_SKID_PID
+
+#endif // CONFIG_SKID_STEER
+
+
+// Flysky parameters
+//--------------------------------------------------------
+
+#define CONFIG_USE_FLYSKY
+
+#ifdef CONFIG_USE_FLYSKY
+
+#   define CONFIG_FLYSKY_CH_MODE      4
+#   define CONFIG_FLYSKY_CH_THROTTLE  1
+#   define CONFIG_FLYSKY_CH_STEER     0
+
+#   define CONFIG_FLYSKY_DISABLED 1000
+
+#   define CONFIG_FLYSKY_IF Serial
+
+#endif // CONFIG_USE_FLYSKY
+
+
+// CAN parameters
+//--------------------------------------------------------
+
+#define CONFIG_CAN_IF CAN_IF1
+
+
+// Debug console parameters
+//--------------------------------------------------------
+
+#define CONFIG_CONSOLE_IF Serial
 
 
 // Flash parameters config (в процессе)
 //--------------------------------------------------------
 
-//// #define CONFIG_LOAD_PARAMS
+#undef CONFIG_LOAD_PARAMS
+
+
+// Misc
+//----------------------------------------------------
+
+#define CONFIG_DT 0.02f
 
 
 #include <config_asserts.h>

@@ -7,7 +7,6 @@ static constexpr int INITIAL_BAUD = 115200;
 
 
 ap_periph_t ap_periph;
-
 DueFlashStorage due_flash;
 
 

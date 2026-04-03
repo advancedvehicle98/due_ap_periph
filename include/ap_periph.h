@@ -6,6 +6,9 @@
 #include <config.h>
 
 #include <due_can.h>
+#ifdef CONFIG_USE_FLYSKY
+#   include <FlyskyIBUS.h>
+#endif 
 
 #include <ap_param.h>
 #ifdef CONFIG_USE_NAVX
@@ -24,13 +27,16 @@ typedef srv_channel_steer srv_channels;
 class ap_periph_t
 {	
 public:
-	ap_periph_t( HardwareSerial& uart    = Serial,
-				 HardwareSerial& console = Serial,
-				 CANRaw&         can     = Can1,
+	ap_periph_t( HardwareSerial& uart    = Serial
+			   , HardwareSerial& console = CONFIG_CONSOLE_IF
+			   , CANRaw&         can     = CONFIG_CAN_IF
 #if defined( CONFIG_USE_NAVX ) && defined( CONFIG_STATIC_NAVX )
-				 navx_t&         navx    = navx0
+			   , navx_t&         navx    = navx0
 #endif
-				 );
+#if defined( CONFIG_USE_FLYSKY )
+			   , HardwareSerial& ibus    = CONFIG_FLYSKY_IF
+#endif
+			   );
 	
 	void init( void );
 	void update( void );
@@ -44,7 +50,11 @@ private:
 	CANRaw&         _can;
 
 #ifdef CONFIG_USE_NAVX
-	navx_t&         _navx;
+	navx_t& _navx;
+#endif
+
+#ifdef CONFIG_USE_FLYSKY
+	FlyskyIBUS _flysky;
 #endif
 
 	srv_channels _motors;

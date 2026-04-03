@@ -9,7 +9,9 @@
 #   include <DualVNH5019MotorShield.h>
 #endif
 
-#include <ap_wheel_rate_control.h>
+#ifdef CONFIG_SKID_PID
+#   include <ap_wheel_rate_control.h>
+#endif
 
 
 class srv_channel_skid
@@ -20,9 +22,9 @@ public:
 	void init( void );
 	void update( const bool armed, const float dt );
 
-	void set_skid( const float skid,
+	void set_steer( const float steer,
 					const bool  apply_scaling ) {
-		_steer = skid;
+		_steer = steer;
 		_apply_scaling = apply_scaling;
 	}
 
@@ -81,8 +83,12 @@ private:
 		  _throttle_old,
 		  _slew_rate;
 
+#ifdef CONFIG_SKID_PID
 	ap_wheel_rate_control _rate_ctrl;
 
+	void _get_rate_controlled_throttle( float& throttle_left, float& throttle_right, float dt );
+#endif 
+   
 	uint8_t _limit_mask = 0;
 
 	bool _apply_scaling;
@@ -106,7 +112,6 @@ private:
 	uint16_t _calc_individual_pwm( const float _out_scaled, const int16_t high_out );
 	inline void _calc_pwm( void );
 	void _driver_specific_out( void );
-	void _get_rate_controlled_throttle( float& throttle_left, float& throttle_right, float dt );
 	float _get_scaled_throttle( float throttle ) const;
 	float _get_slew_limited_throttle( const float throttle, const float dt ) const;
 	void _output( const bool armed, const float dt );
