@@ -4,35 +4,31 @@
 
 // Motor config
 //--------------------------------------------------------
-#define CONFIG_MOT_THR_MAX   100
 
-static_assert( 5 <= CONFIG_MOT_THR_MAX
-			&&      CONFIG_MOT_THR_MAX <= 100,
-			   "CONFIG_MOT_THR_MAX must be in range [5, 100]" );
+// см. параметры https://ardupilot.org/rover/docs/parameters.html#servo1-function
 
-#define CONFIG_MOT_THR_MIN   0
+#define CONFIG_MOT_THR_MAX      100
+#define CONFIG_MOT_THR_MIN      0
+#define CONFIG_MOT_THST_EXPO    0.0
+#define CONFIG_MOT_SPD_SCA_BASE 0.0
+#define CONFIG_MOT_REV_DELAY    0.0
 
-static_assert( 0 <= CONFIG_MOT_THR_MIN
-			&&      CONFIG_MOT_THR_MIN <= 20,
-			   "CONFIG_MOT_THR_MIN must be in range [0, 20]" );
+#define CONFIG_SKID_STEER
 
-static_assert( CONFIG_MOT_THR_MIN <= CONFIG_MOT_THR_MAX,
-			   "CONFIG_MOT_THR_MIN must be less or equal t0 CONFIG_MOT_THR_MAX");
+#ifdef CONFIG_SKID_STEER
 
-#define CONFIG_MOT_THST_EXPO 0.0
+#   define CONFIG_MOT_THST_ASYM   1.0
+#   define CONFIG_MOT_STR_THR_MIX 0.6
 
-static_assert( -1.0f - __FLT_EPSILON__ < float( CONFIG_MOT_THST_EXPO )
-			&&                           float( CONFIG_MOT_THST_EXPO ) < 1.0f + __FLT_EPSILON__,
-			   "CONFIG_MOT_THST_EXPO must be in range [-1.0, 1.0]" );
+#endif
 
 
 // MXP-MD2 config
 //--------------------------------------------------------
+
 #define CONFIG_USE_MXP_MD2
 
 #ifdef CONFIG_USE_MXP_MD2
-
-#   define CONFIG_MXP_MD2_SKID_STEER
 
 #   define CONFIG_MXP_MD2_LEFT_INA1_PIN  2
 #   define CONFIG_MXP_MD2_LEFT_INB1_PIN  3
@@ -50,10 +46,20 @@ static_assert( -1.0f - __FLT_EPSILON__ < float( CONFIG_MOT_THST_EXPO )
 #   define CONFIG_MXP_MD2_RIGHT_INB2_PIN 12
 #   define CONFIG_MXP_MD2_RIGHT_PWM2_PIN 13
 
-#   define CONFIG_MXP_MD2_MAX_PWM 500
-#   define CONFIG_MXP_MD2_MIN_PWM (-500)
+#   define CONFIG_MXP_MD2_PWM_TRIM 0
+#   define CONFIG_MXP_MD2_PWM_MAX  700
+#   define CONFIG_MXP_MD2_PWM_MIN  -700
 
 #endif
+
+
+// Studica maverick motor config
+//--------------------------------------------------------
+
+#define CONFIG_ENC_FR_PIN 22
+#define CONFIG_ENC_BR_PIN 23
+#define CONFIG_ENC_FL_PIN 24
+#define CONFIG_ENC_BL_PIN 25
 
 
 // Navx config
@@ -65,17 +71,34 @@ static_assert( -1.0f - __FLT_EPSILON__ < float( CONFIG_MOT_THST_EXPO )
 #endif
 
 
+// PID rate control parameters
+//--------------------------------------------------------
+
+// https://github.com/ArduPilot/ardupilot/blob/7ae671e53f25e8f784d3e6ede9f125c6aca12cf7/libraries/AP_WheelEncoder/AP_WheelRateControl.cpp#L231
+
+#ifdef CONFIG_SKID_STEER
+
+#define   CONFIG_PID_P         0.1f
+#define   CONFIG_PID_I         0.0f
+#define   CONFIG_PID_D         0.0f
+#define   CONFIG_PID_FF        0.1f 
+#define   CONFIG_PID_IMAX      0.0f 
+#define   CONFIG_PID_FILT_T_HZ 1.0f 
+#define   CONFIG_PID_FILT_E_HZ 1.0f
+#define   CONFIG_PID_FILT_D_HZ 1.0f 
+#define   CONFIG_PID_SRMAX     0.0f
+#define   CONFIG_PID_DFF       0.0f
+
+#endif
+
+
 // Flash parameters config (в процессе)
 //--------------------------------------------------------
 
 //// #define CONFIG_LOAD_PARAMS
 
 
-// Misc
-//--------------------------------------------------------
-
-
-//// #define CONFIG_PWM_CALC_SLEW
+#include <config_asserts.h>
 
 
 #endif // ! __CONFIG_H

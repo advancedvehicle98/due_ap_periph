@@ -35,6 +35,8 @@ init( void )
 	_navx.set_console( &_console );
 	_navx.init();
 #endif
+
+	_motors.set_console( &_console );
 	
 	// Добавить инициализацию CAN
 	
@@ -52,5 +54,5 @@ update( void )
 	_navx.update();
 #endif
 
-	_motors.update();
+	_motors.update( true, 0 );
 }

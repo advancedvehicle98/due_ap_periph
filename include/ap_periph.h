@@ -14,6 +14,13 @@
 #include <srv_channel_skid.h>
 
 
+#ifdef CONFIG_SKID_STEER
+typedef srv_channel_skid srv_channels;
+#else 
+typedef srv_channel_steer srv_channels;
+#endif
+
+
 class ap_periph_t
 {	
 public:
@@ -40,7 +47,7 @@ private:
 	navx_t&         _navx;
 #endif
 
-	srv_channel_skid _motors;
+	srv_channels _motors;
 	
 	void _can_init( void );
 	void _load_parameters( void );
