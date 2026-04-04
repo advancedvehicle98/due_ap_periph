@@ -120,10 +120,20 @@
 #endif // CONFIG_USE_FLYSKY
 
 
-// CAN parameters
+// CAN controller parameters
 //--------------------------------------------------------
 
 #define CONFIG_CAN_IF CAN_IF1
+
+// см. дефайны в can_common
+#define CONFIG_CAN_BITRATE CAN_BPS_250K
+
+#define CONFIG_CAN_RX_BUFFER_SIZE 128
+
+
+// DroneCAN parameters
+//--------------------------------------------------------
+#define CONFIG_DRONECAN_POOL_SIZE 12000
 
 
 // Debug console parameters

@@ -45,8 +45,12 @@ init( void )
 	_motors.set_console( &_console );
 
 	_flysky.begin();
-	// Добавить инициализацию CAN
-	
+
+	_can_init();
+
+#ifdef DEBUG
+	_console.println( "init ok" );
+#endif
 }
 
 
@@ -85,4 +89,6 @@ update( void )
 	}
 
 	_motors.update( armed, CONFIG_DT );
+
+	
 }

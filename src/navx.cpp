@@ -18,7 +18,7 @@ init( void )
 	Wire.begin();
 
 #ifdef DEBUG
-	_console->println( "navx success" );
+	_console->println( "navx ok" );
 #endif
 }
 

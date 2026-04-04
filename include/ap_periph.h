@@ -11,6 +11,7 @@
 #endif 
 
 #include <ap_param.h>
+#include <dronecan.h>
 #ifdef CONFIG_USE_NAVX
 #   include <navx.h>
 #endif
@@ -44,6 +45,8 @@ public:
 private:
 	static const int _UART_BAUD    = 115200;
 	static const int _CONSOLE_BAUD = _UART_BAUD;
+
+	dronecan _dronecan;
 	
 	HardwareSerial& _uart;
 	HardwareSerial& _console;
@@ -60,6 +63,8 @@ private:
 	srv_channels _motors;
 	
 	void _can_init( void );
+	void _can_process_rx( void );
+	void _can_update( void );
 	void _load_parameters( void );
 };
 
