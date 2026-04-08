@@ -1,5 +1,6 @@
 // Reference: https://github.com/ArduPilot/ardupilot/blob/a004f8b27b3f0847a0bc06a82f55f01c9f044110/libraries/AP_Param/AP_Param.cpp
 
+#ifdef CONFIG_LOAD_PARAMS
 
 #include <ap_param.h>
 
@@ -70,3 +71,6 @@ _write_sentinel( uint32_t off )
 	
 	_flash->write( off, sentinel, sizeof( sentinel ) );
 }
+
+
+#endif // CONFIG_LOAD_PARAMS

@@ -2,3 +2,7 @@
 *~
 src/*~
 include/*~
+modules/
+dsdl/
+include/dronecan
+include/canard.h

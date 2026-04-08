@@ -7,7 +7,6 @@ static constexpr int INITIAL_BAUD = 115200;
 
 
 ap_periph_t ap_periph;
-DueFlashStorage due_flash;
 
 
 void
@@ -18,9 +17,10 @@ setup( void )
 #ifdef DEBUG	
 	Serial.println( "starting ap_periph" );
 #endif
-	
+
+#ifdef CONFIG_LOAD_PARAMS
 	ap_param_s::set_console( &Serial );
-	ap_param_s::set_flash( &due_flash );
+#endif 
 	
 #ifdef DEBUG
 	Serial.println( "initializing ap_periph" );

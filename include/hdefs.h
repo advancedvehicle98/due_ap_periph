@@ -13,4 +13,22 @@
 #define CAN_MBOX_COUNT 8
 
 
+/* #define DUE_CAN_BITRATE( b ) CAN_BPS_##b##K */
+/* #define MCP_CAN_BITRATE( b ) CAN_##b##KBPS */
+
+/* #define MCP_CAN_MHZ( f ) MCP_##f##MHZ */
+
+#define DUE_CAN_BITRATE( b ) __CONCAT( CAN_BPS_, \
+							 __CONCAT( b, \
+									   K) )
+
+#define MCP_CAN_BITRATE( b ) __CONCAT( CAN_, \
+							 __CONCAT( b, \
+									   KBPS ) )
+
+#define MCP_CAN_MHZ( f ) __CONCAT( MCP_, \
+						 __CONCAT( f, \
+								   MHZ) )
+
+
 #endif // ! __HDEFS_H

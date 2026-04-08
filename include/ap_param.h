@@ -4,6 +4,8 @@
 #ifndef __AP_PARAM_H
 #define __AP_PARAM_H
 
+#ifdef CONFIG_LOAD_PARAMS
+
 
 #include <stdint.h>
 
@@ -67,5 +69,7 @@ private:
 	static void _write_sentinel( uint32_t off );
 };
 
+
+#endif // CONFIG_LOAD_PARAMS
 
 #endif // ! __AP_PARAM_H

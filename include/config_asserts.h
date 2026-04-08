@@ -87,9 +87,19 @@ config_assert_float_range( CONFIG_PID_DFF,       0.0f, 0.02f );
 // CAN parameters
 //----------------------------------------------------
 
-#if CONFIG_CAN_IF != CAN_IF0 && CONFIG_CAN_IF != CAN_IF1
-#   error "CONFIG_CAN_IF_NUM must be CAN_IF0 or CAN_IF1"
-#endif 
+#ifdef CONFIG_CAN_USE_MCP
+
+#   if CONFIG_CAN_MCP_CS != 4 && CONFIG_CAN_MCP_CS != 10 && CONFIG_CAN_MCP_CS != 52
+#       error ""
+#endif
+
+#else // ! CONFIG_CAN_USE_MCP
+
+#   if CONFIG_CAN_IF != CAN_IF0 && CONFIG_CAN_IF != CAN_IF1
+#       error "CONFIG_CAN_MCP_CS must be either of those pins: 4, 10 and 52"
+#   endif 
+
+#endif
 
 
 // Misc

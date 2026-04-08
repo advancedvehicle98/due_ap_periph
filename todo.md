@@ -4,6 +4,8 @@
   - include/rotations.h (из ardupilot)
   - include/ftype.h (из ardupilot)
 - библиотеки
+  - due_can
+  - mcp_can
   - dual-vnh5019-motor-shield
   - FlyskyIBUS
 
@@ -25,6 +27,8 @@
 ### прочее
 - добавить, как будет определяться состояние armed
   - когда с этим разберёмся, надо в `ap_periph::update()` поменять аргумент в строке с `_motors.update()`
+
+## include/
 
 ## src/
 

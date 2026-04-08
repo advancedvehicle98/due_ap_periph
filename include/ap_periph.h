@@ -3,19 +3,25 @@
 
 
 #include <Arduino.h>
+
 #include <config.h>
 
-#include <due_can.h>
-#ifdef CONFIG_USE_FLYSKY
-#   include <FlyskyIBUS.h>
-#endif 
+#ifdef CONFIG_LOAD_PARAMS
+#   include <ap_param.h>
+#   include <DueFlashStorage.h>
+#endif
 
-#include <ap_param.h>
-#include <dronecan.h>
+#include <can.h>
+
 #ifdef CONFIG_USE_NAVX
 #   include <navx.h>
 #endif
+
 #include <srv_channel_skid.h>
+
+#ifdef CONFIG_USE_FLYSKY
+#   include <FlyskyIBUS.h>
+#endif
 
 
 #ifdef CONFIG_SKID_STEER
@@ -30,7 +36,6 @@ class ap_periph_t
 public:
 	ap_periph_t( HardwareSerial& uart    = Serial
 			   , HardwareSerial& console = CONFIG_CONSOLE_IF
-			   , CANRaw&         can     = CONFIG_CAN_IF
 #if defined( CONFIG_USE_NAVX ) && defined( CONFIG_STATIC_NAVX )
 			   , navx_t&         navx    = navx0
 #endif
@@ -45,12 +50,10 @@ public:
 private:
 	static const int _UART_BAUD    = 115200;
 	static const int _CONSOLE_BAUD = _UART_BAUD;
-
-	dronecan _dronecan;
 	
 	HardwareSerial& _uart;
 	HardwareSerial& _console;
-	CANRaw&         _can;
+	can             _can;
 
 #ifdef CONFIG_USE_NAVX
 	navx_t& _navx;

@@ -6,7 +6,6 @@
 ap_periph_t::
 ap_periph_t( HardwareSerial& uart
 		   , HardwareSerial& console
-		   , CANRaw&         can
 #if defined( CONFIG_USE_NAVX ) && defined( CONFIG_STATIC_NAVX )
 		   , navx_t&         navx
 #endif
@@ -16,7 +15,6 @@ ap_periph_t( HardwareSerial& uart
 		   )
 	: _uart( uart )
 	, _console( console )
-	, _can( can )
 #if defined( CONFIG_USE_NAVX ) && defined( CONFIG_STATIC_NAVX )
 	, _navx( navx )
 #endif
@@ -46,7 +44,7 @@ init( void )
 
 	_flysky.begin();
 
-	_can_init();
+	_can.init();
 
 #ifdef DEBUG
 	_console.println( "init ok" );

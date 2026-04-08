@@ -123,12 +123,22 @@
 // CAN controller parameters
 //--------------------------------------------------------
 
-#define CONFIG_CAN_IF CAN_IF1
+#define CONFIG_CAN_USE_MCP
 
-// см. дефайны в can_common
-#define CONFIG_CAN_BITRATE CAN_BPS_250K
+#ifndef CONFIG_CAN_USE_MCP
 
-#define CONFIG_CAN_RX_BUFFER_SIZE 128
+#   define CONFIG_CAN_IF CAN_IF1
+#   define CONFIG_CAN_RX_BUFFER_SIZE 128
+
+#else // ifdef CONFIG_CAN_USE_MCP
+
+#   define CONFIG_CAN_MCP_CS 10
+#   define CONFIG_CAN_MCP_MHZ 8
+
+#endif
+
+// в кб/с
+#define CONFIG_CAN_BITRATE 250
 
 
 // DroneCAN parameters
