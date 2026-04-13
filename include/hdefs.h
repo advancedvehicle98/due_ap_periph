@@ -2,6 +2,10 @@
 #define __HDEFS_H
 
 
+#define FW_VER_MAJOR 0
+#define FW_VER_MINOR 0
+
+
 // для due_can
 #include <due_can.h>
 
@@ -29,6 +33,9 @@
 #define MCP_CAN_MHZ( f ) __CONCAT( MCP_, \
 						 __CONCAT( f, \
 								   MHZ) )
+
+
+#define ATSAM_UDID_START 0x285E0A60
 
 
 #endif // ! __HDEFS_H

@@ -21,27 +21,44 @@
 
 class can {
 public:
-	can( void );
-	
 	void init( void );
 	void update( void );
 
 	bool is_ok( void ) const { return _ok; }
 	
 private:
-	bool _ok = false;
 	
-	dronecan _dronecan;
+	static bool _should_accept(        uint64_t&            out_data_type_sig,
+								 const uint16_t             data_type,
+								 const dronecan::trx_type_e trx_type );
+	static void _on_reception( struct CanardRxTransfer& rx_trx );
 
+	// protocol handlers
+	static void _handle_alloc_response( struct CanardRxTransfer& rx_trx );
+	static void _handle_get_node_info( struct CanardRxTransfer& rx_trx );
+	
+	static dronecan _dronecan;
+
+	static uavcan_protocol_NodeStatus _node_status;
+
+	static bool _ok;
+	
 #ifdef CONFIG_CAN_USE_MCP
-	MCP_CAN _if;
+	static MCP_CAN _if;
 #else
-	CANRaw& _if;
+	static CANRaw& _if;
 #endif
-
-	inline uint16_t _available( void );
-	void _process_rx( void );
-	inline uint32_t _read( CAN_FRAME& f );
+	
+	static inline uint16_t _available( void );
+	static inline void _get_sys_uid( uint8_t *uid, const uint8_t len );
+	static void _process_rx( void );
+	static inline uint32_t _read( CAN_FRAME& f );
+	static inline void _read_uid( uint8_t *uid );
+	static bool _respond( struct CanardRxTransfer& rx_trx,
+						  const uint64_t data_type_sig,
+						  const uint16_t data_type_id,
+						  const uint8_t *paylosd,
+						  const uint16_t payload_len );
 };
 
 

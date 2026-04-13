@@ -3,6 +3,7 @@
 
 
 #include <cmath>
+#include <cstdint>
 #include <type_traits>
 
 
@@ -71,6 +72,9 @@ radians( const float deg )
 {
 	return deg*DEG2RAD;
 }
+
+
+uint16_t get_random16( void );
 	
 	
 }; // namespace math
