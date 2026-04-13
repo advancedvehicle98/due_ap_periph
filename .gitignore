@@ -4,5 +4,8 @@ src/*~
 include/*~
 modules/
 dsdl/
+src/dronecan
 include/dronecan
 include/canard.h
+include/canard_internals.h
+src/canard.c
